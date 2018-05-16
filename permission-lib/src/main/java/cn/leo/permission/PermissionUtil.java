@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionGroupInfo;
 import android.content.pm.PermissionInfo;
@@ -18,6 +19,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by JarryLeo on 2018/2/6.
@@ -206,6 +213,9 @@ public class PermissionUtil {
      * @param result 请求结果回调
      */
     public void execute(Result result) {
+        if (!checkManifestPermission()) {
+            return;
+        }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || checkPermissions()) {
             if (result != null) {
                 result.onSuccess();
@@ -229,6 +239,63 @@ public class PermissionUtil {
         }
         //开始请求
         requestPermission();
+    }
+
+    /**
+     * 检查动态权限是否都在清单文件注册
+     */
+    private boolean checkManifestPermission() {
+        List<String> notRegPermissions = getNotRegPermissions();
+        boolean empty = notRegPermissions.isEmpty();
+        if (empty) {
+            return true;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String notRegPermission : notRegPermissions) {
+            sb.append(" [")
+                    .append(notRegPermission)
+                    .append("] ");
+        }
+        sb.append(mActivity.getResources().getString(R.string.permission_not_reg_in_manifest));
+        String permissionList = sb.toString();
+        String s = permissionList.replaceAll("(\\s\\[.*\\]\\s)\\1+", "$1");
+        Log.e("MagicPermission Error: ", s);
+        Toast.makeText(mActivity, s, Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    /**
+     * 获取动态申请却没有在清单文件注册的权限
+     */
+    private List<String> getNotRegPermissions() {
+        String[] requiredPermissions = getRequiredPermissions();
+        List<String> list = Arrays.asList(requiredPermissions);
+        List<String> notReg = new ArrayList<>();
+        for (String permission : mPermissions) {
+            if (!list.contains(permission)) {
+                notReg.add(permission);
+            }
+        }
+        return notReg;
+    }
+
+    /**
+     * 获取清单文件中注册的权限
+     */
+    private String[] getRequiredPermissions() {
+        try {
+            PackageInfo info =
+                    mActivity.getPackageManager()
+                            .getPackageInfo(mActivity.getPackageName(), PackageManager.GET_PERMISSIONS);
+            String[] ps = info.requestedPermissions;
+            if (ps != null && ps.length > 0) {
+                return ps;
+            } else {
+                return new String[0];
+            }
+        } catch (Exception e) {
+            return new String[0];
+        }
     }
 
     /**

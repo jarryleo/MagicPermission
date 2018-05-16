@@ -1,5 +1,6 @@
 <resources>
     <string name="permission_denied">获取权限失败，操作无法完成!</string>
+    <string name="permission_not_reg_in_manifest">权限未在清单文件注册!</string>
     <string name="permission_request_exception">一个权限申请工具类对象只能申请一次权限</string>
     <string name="permission_should_show_rationale">本次操作需要%1$s权限,是否前往设置开启?</string>
     <string name="permission_dialog_denied">拒绝</string>
