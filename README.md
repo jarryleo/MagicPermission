@@ -62,7 +62,7 @@ apply plugin: 'cn.leo.plugin.magic'
 
 ...
 dependencies {
-	implementation 'com.github.jarryleo:MagicPermission:v1.0'
+	implementation 'com.github.jarryleo:MagicPermission:v1.1'
 }
 ```
 
