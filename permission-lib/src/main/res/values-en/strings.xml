@@ -1,0 +1,7 @@
+<resources>
+    <string name="permission_denied">Permission denied, operation cannot be completed!</string>
+    <string name="permission_request_exception">A permission application tool class object can only apply once.</string>
+    <string name="permission_should_show_rationale">This operation requires %1$s permission. Do you want to set it open?</string>
+    <string name="permission_dialog_denied">deny</string>
+    <string name="permission_dialog_granted">grant</string>
+</resources>
