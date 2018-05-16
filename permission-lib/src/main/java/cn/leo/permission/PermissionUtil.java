@@ -256,7 +256,7 @@ public class PermissionUtil {
                     .append(notRegPermission)
                     .append("] ");
         }
-        sb.append(mActivity.getResources().getString(R.string.permission_not_reg_in_manifest));
+        sb.append(mActivity.getString(R.string.permission_not_reg_in_manifest));
         String permissionList = sb.toString();
         String s = permissionList.replaceAll("(\\s\\[.*\\]\\s)\\1+", "$1");
         Log.e("MagicPermission Error: ", s);
