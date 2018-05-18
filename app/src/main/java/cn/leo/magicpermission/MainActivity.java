@@ -1,7 +1,6 @@
 package cn.leo.magicpermission;
 
 import android.Manifest;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -25,6 +24,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void onClick(View v) {
         Toast.makeText(this, "申请权限成功", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, Main2Activity.class));
     }
 }
