@@ -30,6 +30,7 @@ public void testPermission() {
 }
 ```
 ### 注意:只能在Fragment(v4)和FragmentActivity 以及它们的子类 中使用
+### 不要把注解打到有生命周期的方法上，否则可能会导致生命周期被拦截
 
 ### 依赖方法:
 #### To get a Git project into your build:
