@@ -68,6 +68,10 @@ dependencies {
 }
 ```
 
+> 用于支持kotlin的插件用的是 [aspectjx](https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx)   
+> 感谢插件作者    
+> 因为编织所有二进制文件的问题导致编译速度慢的问题，请查看原作者提供的解决方案 
+
 ### 小贴士：
 在 app 的 build 依赖里再加一个依赖：
 
