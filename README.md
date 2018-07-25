@@ -77,7 +77,7 @@ dependencies {
 在 app 的 build 依赖里再加一个依赖：
 
 ```
-implementation 'com.github.jarryleo:MagicThread:v2.1'
+implementation 'com.github.jarryleo:MagicThread:v2.2'
 ```
 ## 即可使用安卓纯注解线程转换库
 example:
