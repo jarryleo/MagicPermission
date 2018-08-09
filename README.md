@@ -29,6 +29,18 @@ public void testPermission() {
         //执行权限申请通过后的业务逻辑
 }
 ```
+权限申请失败回调（如果不需要自己处理失败结果，可以忽略）          
+给任意方法打上 注解 @PermissionRequestFailedCallback 即可         
+打上此注解的方法 即为权限申请失败回调，方法的参数必须为 String[] 或者没有参数；          
+当参数为String[] 时候，结果为失败的权限数组；        
+
+```
+@PermissionRequestFailedCallback
+private void failed(String[] failedPermissions) {
+     Toast.makeText(this, "申请权限失败" + Arrays.toString(failedPermissions), Toast.LENGTH_SHORT).show();
+}
+```
+
 ### 注意:只能在Fragment(v4)和FragmentActivity 以及它们的子类 中使用
 ### 不要把注解打到有生命周期的方法上，否则可能会导致生命周期被拦截
 
@@ -65,7 +77,7 @@ apply plugin: 'android-aspectjx'  //kotlin 用这个，编译速度会慢点
 ...
 dependencies {
 	...
-	implementation 'com.github.jarryleo:MagicPermission:v1.1'
+	implementation 'com.github.jarryleo:MagicPermission:v1.2'
 }
 ```
 
