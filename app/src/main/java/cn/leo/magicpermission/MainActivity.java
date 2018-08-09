@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toast.makeText(this, "申请权限失败" + Arrays.toString(failedPermissions), Toast.LENGTH_SHORT).show();
     }
 
-
     private void failed() {
         Toast.makeText(this, "申请权限失败", Toast.LENGTH_SHORT).show();
     }

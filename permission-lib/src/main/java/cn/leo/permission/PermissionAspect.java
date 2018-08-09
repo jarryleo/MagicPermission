@@ -56,7 +56,7 @@ public class PermissionAspect {
 
                     @Override
                     public void onFailed(String[] failedPermissions) {
-                        Method failedCallBack = findFailedCallBack(target);
+                        Method failedCallBack = findFailedCallback(target);
                         if (failedCallBack == null) {
                             showFailedToast();
                             return;
@@ -65,7 +65,7 @@ public class PermissionAspect {
                         try {
                             if (types.length == 1 &&
                                     types[0].isArray() &&
-                                    types[0].getComponentType() == String.class ) {
+                                    types[0].getComponentType() == String.class) {
                                 failedCallBack.invoke(target, (Object) failedPermissions);
                             } else if (types.length == 0) {
                                 failedCallBack.invoke(target);
@@ -86,11 +86,11 @@ public class PermissionAspect {
 
     }
 
-    public Method findFailedCallBack(Object object) {
+    public Method findFailedCallback(Object object) {
         Class<?> aClass = object.getClass();
         for (Method method : aClass.getDeclaredMethods()) {
-            PermissionRequestFailedCallback callBack = method.getAnnotation(PermissionRequestFailedCallback.class);
-            if (null == callBack) continue;
+            boolean isCallback = method.isAnnotationPresent(PermissionRequestFailedCallback.class);
+            if (!isCallback) continue;
             method.setAccessible(true);
             return method;
         }
