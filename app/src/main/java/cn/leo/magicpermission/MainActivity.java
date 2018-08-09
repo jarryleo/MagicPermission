@@ -7,7 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.Arrays;
+
 import cn.leo.permission.PermissionRequest;
+import cn.leo.permission.PermissionRequestFailedCallback;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,5 +27,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void onClick(View v) {
         Toast.makeText(this, "申请权限成功", Toast.LENGTH_SHORT).show();
+    }
+
+    @PermissionRequestFailedCallback
+    private void failed(String[] failedPermissions) {
+        Toast.makeText(this, "申请权限失败" + Arrays.toString(failedPermissions), Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void failed() {
+        Toast.makeText(this, "申请权限失败", Toast.LENGTH_SHORT).show();
     }
 }

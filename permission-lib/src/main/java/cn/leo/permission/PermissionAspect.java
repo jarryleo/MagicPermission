@@ -10,6 +10,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -30,7 +31,7 @@ public class PermissionAspect {
         Method method = signature.getMethod();
         PermissionRequest annotation = method.getAnnotation(PermissionRequest.class);
         String[] permission = annotation.value();
-        Object target = joinPoint.getTarget();
+        final Object target = joinPoint.getTarget();
         FragmentActivity fragmentActivity;
         if (target instanceof FragmentActivity) {
             fragmentActivity = (FragmentActivity) target;
@@ -54,10 +55,45 @@ public class PermissionAspect {
                     }
 
                     @Override
-                    public void onFailed() {
+                    public void onFailed(String[] failedPermissions) {
+                        Method failedCallBack = findFailedCallBack(target);
+                        if (failedCallBack == null) {
+                            showFailedToast();
+                            return;
+                        }
+                        Class<?>[] types = failedCallBack.getParameterTypes();
+                        try {
+                            if (types.length == 1 &&
+                                    types[0].isArray() &&
+                                    types[0].getComponentType() == String.class ) {
+                                failedCallBack.invoke(target, (Object) failedPermissions);
+                            } else if (types.length == 0) {
+                                failedCallBack.invoke(target);
+                            } else {
+                                showFailedToast();
+                            }
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    public void showFailedToast() {
                         Toast.makeText(finalFragmentActivity, finalFragmentActivity.getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
                     }
                 });
 
+    }
+
+    public Method findFailedCallBack(Object object) {
+        Class<?> aClass = object.getClass();
+        for (Method method : aClass.getDeclaredMethods()) {
+            PermissionRequestFailedCallback callBack = method.getAnnotation(PermissionRequestFailedCallback.class);
+            if (null == callBack) continue;
+            method.setAccessible(true);
+            return method;
+        }
+        return null;
     }
 }
