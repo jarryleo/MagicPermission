@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -409,7 +408,7 @@ public class PermissionUtil {
             }
             String permissionList = sb.toString();
             String s = permissionList.replaceAll("(\\s\\[.*\\]\\s)\\1+", "$1");
-            //如果用户点了不提示(或者同时申请多个权限)，我们主动提示用户
+/*            //如果用户点了不提示(或者同时申请多个权限)，我们主动提示用户
             boolean flag = false;
             for (String aPer : per) {
                 boolean b = ActivityCompat.shouldShowRequestPermissionRationale(mActivity, aPer);
@@ -421,16 +420,16 @@ public class PermissionUtil {
             if (flag) {
                 mFragmentCallback.openSettingActivity(
                         mActivity.getString(R.string.permission_should_show_rationale, s));
-            } else {
-                //申请权限
-                try {
-                    mFragmentCallback.setRequestTime();
-                    mFragmentCallback.requestPermissions(per, REQUEST_CODE);
-                } catch (Exception e) {
-                    mFragmentCallback.openSettingActivity(
-                            mActivity.getString(R.string.permission_should_show_rationale, s));
-                }
+            } else {*/
+            //申请权限
+            try {
+                mFragmentCallback.setRequestTime();
+                mFragmentCallback.requestPermissions(per, REQUEST_CODE);
+            } catch (Exception e) {
+                mFragmentCallback.openSettingActivity(
+                        mActivity.getString(R.string.permission_should_show_rationale, s));
             }
+            /*}*/
         }
     }
 }
