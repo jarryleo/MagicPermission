@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
-    @PermissionRequestFailedCallback
+    //@PermissionRequestFailedCallback
     private void failed(String[] failedPermissions) {
         Toast.makeText(this, "申请权限失败" + Arrays.toString(failedPermissions), Toast.LENGTH_SHORT).show();
     }
