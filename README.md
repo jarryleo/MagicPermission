@@ -77,7 +77,7 @@ apply plugin: 'android-aspectjx'  //kotlin 用这个，编译速度会慢点
 ...
 dependencies {
 	...
-	implementation 'com.github.jarryleo:MagicPermission:v1.2'
+	implementation 'com.github.jarryleo:MagicPermission:v1.3'
 }
 ```
 
