@@ -82,6 +82,11 @@ dependencies {
 }
 ```
 
+#### 混淆配置
+```
+-keep class cn.leo.** { *; }
+```
+
 > 用于支持kotlin的插件用的是 [aspectjx](https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx)   
 > 感谢插件作者    
 > 因为编织所有二进制文件的问题导致编译速度慢的问题，请查看原作者提供的解决方案 
