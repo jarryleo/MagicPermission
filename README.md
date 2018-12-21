@@ -97,27 +97,3 @@ dependencies {
 > 感谢插件作者    
 > 因为编织所有二进制文件的问题导致编译速度慢的问题，请查看原作者提供的解决方案 
 
-### 小贴士：
-在 app 的 build 依赖里再加一个依赖：
-
-```
-implementation 'com.github.jarryleo:MagicThread:v2.2'
-```
-## 即可使用安卓纯注解线程转换库
-example:
-```
-    @RunOnIOThread
-    public void progress() {
-        for (int i = 0; i <= 100; i++) {
-            showProgress(i);
-            SystemClock.sleep(1000);
-        }
-    }
-
-    @RunOnUIThread
-    private void showProgress(int progress) {
-        mTvTest.setText(progress + "%");
-    }
-```
-
-详情见 [安卓纯注解线程转换库](https://github.com/jarryleo/MagicThread)
