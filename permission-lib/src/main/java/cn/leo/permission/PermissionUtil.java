@@ -1,5 +1,6 @@
 package cn.leo.permission;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,12 +14,12 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public class PermissionUtil {
             mPermissions = permissions;
         }
 
+        @TargetApi(Build.VERSION_CODES.GINGERBREAD)
         @Override
         public void onRequestPermissionsResult(int requestCode,
                                                @NonNull String[] permissions,
@@ -277,7 +279,6 @@ public class PermissionUtil {
         sb.append(mActivity.getString(R.string.permission_not_reg_in_manifest));
         String permissionList = sb.toString();
         String s = permissionList.replaceAll("(\\s\\[.*\\]\\s)\\1+", "$1");
-        Log.e("MagicPermission Error: ", s);
         Toast.makeText(mActivity, s, Toast.LENGTH_SHORT).show();
         return false;
     }
@@ -388,6 +389,7 @@ public class PermissionUtil {
     /**
      * 申请权限
      */
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     private void requestPermission() {
 
         if (mActivity.getSupportFragmentManager().findFragmentByTag(tag) == null) {
